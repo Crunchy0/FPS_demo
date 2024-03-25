@@ -11,26 +11,27 @@ public struct ItemStackSetup
 
 public class ItemStack
 {
-    public ItemConfig ItemConfig { get; }
+    public ItemInstance Item { get; }
     public int Capacity { get; }
-    public int Amount { get; private set; } = 0;
+    public int Amount { get => Item.Amount; }
 
     public ItemStack(ItemConfig config, int capacity)
     {
-        ItemConfig = config;
+        Item = new ItemInstance(config);
+        Item.Amount = 0;
         Capacity = Mathf.Max(1, capacity);
     }
 
     public bool AddItem(ItemInstance item)
     {
-        if (item.Id != ItemConfig.Id)
+        if (item.Config.Id != Item.Config.Id)
             return false;
 
         int added = Mathf.Min(item.Amount, Capacity - Amount);
         if (added < 1)
             return false;
 
-        Amount += added;
+        Item.Amount += added;
         return true;
     }
 
@@ -41,8 +42,8 @@ public class ItemStack
         if (retrieved < 1)
             return false;
 
-        Amount -= retrieved;
-        item = new ItemInstance(ItemConfig);
+        Item.Amount -= retrieved;
+        item = new ItemInstance(Item.Config);
         item.Amount = retrieved;
         return true;
     }

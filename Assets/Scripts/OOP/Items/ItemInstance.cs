@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ItemInstance
 {
-    public ItemId Id { get; }
     public ItemConfig Config { get; }
     public int Amount { get; set; } = 1;
 
@@ -12,7 +11,6 @@ public class ItemInstance
 
     public ItemInstance(ItemConfig config, IItemState state = null)
     {
-        Id = config.Id;
         Config = config;
         _state = state;
     }

@@ -17,5 +17,7 @@ MonoBehaviour:
   _isUnique: 1
   _name: Assault rifle
   _preview: {fileID: 0}
-  _itemPrefab: {fileID: 0}
-  _equipmentPrefab: {fileID: 0}
+  _itemPrefab: {fileID: 8368091207592304217, guid: f03632b8cd5a31c47836acf42f99da6f,
+    type: 3}
+  _equipmentPrefab: {fileID: 5597175099391572403, guid: 98f0b2a8fcaa2b54c80d85699599aea3,
+    type: 3}

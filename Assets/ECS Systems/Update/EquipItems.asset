@@ -9,6 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afb0d879338d54746ad17c6663f31c1b, type: 3}
-  m_Name: Input
+  m_Script: {fileID: 11500000, guid: 3d82c2c89ab4a084180b8d3c5111e5b1, type: 3}
+  m_Name: EquipItems
   m_EditorClassIdentifier: 

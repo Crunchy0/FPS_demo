@@ -18,7 +18,7 @@ MonoBehaviour:
   - itemId: 3
     capacity: 120
   - itemId: 5
-    capacity: 6
+    capacity: 5
   - itemId: 6
     capacity: 5
   _uniqueSlots: 030000000200000002000000

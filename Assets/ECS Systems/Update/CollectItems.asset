@@ -10,5 +10,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fd8c80ac0d284634489098fd6449fa34, type: 3}
-  m_Name: InventoryManager
+  m_Name: CollectItems
   m_EditorClassIdentifier: 

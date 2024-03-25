@@ -15,7 +15,6 @@ public sealed class PlayerInteractionSystem : UpdateSystem {
     private Event<PlayerInteractionEvent> _interactionEvent;
 
     private Filter _interactionFilter;
-    [Inject] private ItemDatabase _itemDb;
 
     public override void OnAwake() {
         _collectRequest = World.GetRequest<TryCollectItem>();
@@ -65,8 +64,6 @@ public sealed class PlayerInteractionSystem : UpdateSystem {
                     instance = item.instance
                 });
             }
-            
-            //Debug.Log($"Interacting with item: {item.instance.Id}, amount: {item.instance.Amount}");
         }
     }
 }
