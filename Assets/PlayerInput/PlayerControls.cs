@@ -127,6 +127,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ChooseEquipment"",
+                    ""type"": ""Button"",
+                    ""id"": ""efc25dfd-3941-4fac-925f-b1efbd3b3880"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QuickUse"",
+                    ""type"": ""Button"",
+                    ""id"": ""4512df23-8094-417a-b735-46aabdb5ab5c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -138,6 +156,61 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard/Mouse"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d3b94f02-5739-4ab2-b7ea-535ec3648dd4"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard/Mouse"",
+                    ""action"": ""ChooseEquipment"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3235610-a9f3-4079-bb16-3990f9a17713"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard/Mouse"",
+                    ""action"": ""ChooseEquipment"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a40e4101-f67d-4914-899c-f686834047a3"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard/Mouse"",
+                    ""action"": ""ChooseEquipment"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b4437692-43f4-47bb-adbf-ab4411953b00"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard/Mouse"",
+                    ""action"": ""ChooseEquipment"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""97d5558b-bc98-4be7-8e41-ee6691b17acd"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard/Mouse"",
+                    ""action"": ""QuickUse"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -170,6 +243,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         // Interaction
         m_Interaction = asset.FindActionMap("Interaction", throwIfNotFound: true);
         m_Interaction_Interact = m_Interaction.FindAction("Interact", throwIfNotFound: true);
+        m_Interaction_ChooseEquipment = m_Interaction.FindAction("ChooseEquipment", throwIfNotFound: true);
+        m_Interaction_QuickUse = m_Interaction.FindAction("QuickUse", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -286,11 +361,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Interaction;
     private List<IInteractionActions> m_InteractionActionsCallbackInterfaces = new List<IInteractionActions>();
     private readonly InputAction m_Interaction_Interact;
+    private readonly InputAction m_Interaction_ChooseEquipment;
+    private readonly InputAction m_Interaction_QuickUse;
     public struct InteractionActions
     {
         private @PlayerControls m_Wrapper;
         public InteractionActions(@PlayerControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Interact => m_Wrapper.m_Interaction_Interact;
+        public InputAction @ChooseEquipment => m_Wrapper.m_Interaction_ChooseEquipment;
+        public InputAction @QuickUse => m_Wrapper.m_Interaction_QuickUse;
         public InputActionMap Get() { return m_Wrapper.m_Interaction; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -303,6 +382,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
+            @ChooseEquipment.started += instance.OnChooseEquipment;
+            @ChooseEquipment.performed += instance.OnChooseEquipment;
+            @ChooseEquipment.canceled += instance.OnChooseEquipment;
+            @QuickUse.started += instance.OnQuickUse;
+            @QuickUse.performed += instance.OnQuickUse;
+            @QuickUse.canceled += instance.OnQuickUse;
         }
 
         private void UnregisterCallbacks(IInteractionActions instance)
@@ -310,6 +395,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
+            @ChooseEquipment.started -= instance.OnChooseEquipment;
+            @ChooseEquipment.performed -= instance.OnChooseEquipment;
+            @ChooseEquipment.canceled -= instance.OnChooseEquipment;
+            @QuickUse.started -= instance.OnQuickUse;
+            @QuickUse.performed -= instance.OnQuickUse;
+            @QuickUse.canceled -= instance.OnQuickUse;
         }
 
         public void RemoveCallbacks(IInteractionActions instance)
@@ -344,5 +435,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     public interface IInteractionActions
     {
         void OnInteract(InputAction.CallbackContext context);
+        void OnChooseEquipment(InputAction.CallbackContext context);
+        void OnQuickUse(InputAction.CallbackContext context);
     }
 }

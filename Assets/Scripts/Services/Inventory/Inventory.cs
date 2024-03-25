@@ -66,7 +66,7 @@ public class Inventory
             for(int i = 0; i < _collectables.Count; i++)
             {
                 ItemStack cur = _collectables[i];
-                if (cur.ItemConfig.Id != cfg.Id)
+                if (cur.Item.Config.Id != cfg.Id)
                     continue;
 
                 if (cur.AddItem(request.instance))
@@ -100,7 +100,7 @@ public class Inventory
     {
         for (int i = 0;  i < _uniqueItems.Count; i++)
         {
-            if (id == _uniqueItems[i].Item.Config.Id)
+            if (_uniqueItems[i].IsItemSet && id == _uniqueItems[i].Item.Config.Id)
             {
                 return i;
             }
@@ -108,7 +108,7 @@ public class Inventory
 
         for (int i = 0; i < _collectables.Count; i++)
         {
-            if (id == _collectables[i].ItemConfig.Id)
+            if (id == _collectables[i].Item.Config.Id)
             {
                 return _uniqueItems.Count + i;
             }
@@ -117,16 +117,23 @@ public class Inventory
         return -1;
     }
 
-    public void EquipUniqueItem(int idx)
+    public void EquipItem(int idx)
     {
-        if (idx < 0 || idx >= _uniqueItems.Count)
+        if (idx < 0 || idx >= OverallSlots)
             return;
 
-        ItemConfig config = _uniqueItems[idx].Item.Config;
-        if (config == null || !config.IsEquipment)
+        ItemInstance item;
+        if (idx < _uniqueItems.Count)
+            item = _uniqueItems[idx].Item;
+        else
+        {
+            item = _collectables[idx - _uniqueItems.Count].Item;
+        }
+
+        if (item == null || !item.Config.IsEquipment || item.Amount < 1)
             return;
 
-        OnEquip?.Invoke(_uniqueItems[idx].Item, idx);
+        OnEquip?.Invoke(item, idx);
     }
 
     public void DropUniqueItem(int idx)

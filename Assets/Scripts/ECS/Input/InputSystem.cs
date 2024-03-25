@@ -10,7 +10,8 @@ using VContainer;
 [Il2CppSetOption(Option.DivideByZeroChecks, false)]
 [CreateAssetMenu(menuName = "ECS/Systems/" + nameof(InputSystem))]
 public sealed class InputSystem : UpdateSystem {
-    private Event<PlayerInteractionEvent> _interactionEvent;
+    private Event<PlayerInteractionEvent> _interact;
+    private Event<ChooseEquipmentEvent> _chooseEquipment;
 
     private Filter _mouseReceivers;
     private Filter _keyboardReceivers;
@@ -18,12 +19,15 @@ public sealed class InputSystem : UpdateSystem {
     [Inject] private PlayerControls _controls;
 
     public override void OnAwake() {
-        _interactionEvent = World.GetEvent<PlayerInteractionEvent>();
+        _interact = World.GetEvent<PlayerInteractionEvent>();
+        _chooseEquipment = World.GetEvent<ChooseEquipmentEvent>();
 
         _mouseReceivers = World.Filter.With<MouseDelta>().Build();
         _keyboardReceivers = World.Filter.With<RelativeDirection>().Build();
 
         _controls.Interaction.Interact.started += Interact;
+
+        _controls.Interaction.ChooseEquipment.started += ChooseEquipment;
         _controls.Enable();
     }
 
@@ -42,6 +46,12 @@ public sealed class InputSystem : UpdateSystem {
 
     private void Interact(InputAction.CallbackContext ctx)
     {
-        _interactionEvent.NextFrame(new PlayerInteractionEvent { });
+        _interact.NextFrame(new PlayerInteractionEvent { });
+    }
+
+    private void ChooseEquipment(InputAction.CallbackContext ctx)
+    {
+        ChooseEquipmentEvent chooseEvt = new() { code = ctx.control.name };
+        _chooseEquipment.NextFrame(chooseEvt);
     }
 }

@@ -17,5 +17,7 @@ MonoBehaviour:
   _isUnique: 0
   _name: Grenade
   _preview: {fileID: 0}
-  _itemPrefab: {fileID: 0}
-  _equipmentPrefab: {fileID: 0}
+  _itemPrefab: {fileID: 2016053860605387987, guid: 4fbb60b58a3663d4198c441825e6426a,
+    type: 3}
+  _equipmentPrefab: {fileID: 7669798049385766073, guid: 67f92215c83210a458a6a78d59204fdb,
+    type: 3}
